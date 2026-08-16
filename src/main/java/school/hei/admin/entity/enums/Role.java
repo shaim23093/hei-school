@@ -1,4 +1,4 @@
-package school.hei.admin.enums;
+package school.hei.admin.entity.enums;
 
 public enum Role {
   ADMIN,
