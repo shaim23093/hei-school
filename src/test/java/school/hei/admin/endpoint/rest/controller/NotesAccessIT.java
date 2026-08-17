@@ -14,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
 import school.hei.admin.conf.FacadeIT;
 import school.hei.admin.dto.request.GradeUpdateRequest;
 import school.hei.admin.dto.request.LoginRequest;
@@ -33,7 +32,6 @@ import school.hei.admin.repository.model.JExam;
 import school.hei.admin.repository.model.JGrade;
 import school.hei.admin.repository.model.JStudent;
 
-@TestPropertySource(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 class NotesAccessIT extends FacadeIT {
   @Autowired private TestRestTemplate restTemplate;
   @Autowired private AccountRepository accountRepository;
