@@ -1,0 +1,13 @@
+#!/bin/bash
+ENV=$1
+if [ "$ENV" != "--prod" ] && [ "$ENV" != "--preprod" ]; then
+  echo "Usage: $0 --prod | --preprod"
+  exit 1
+fi
+source "$(dirname "$0")/../.env"
+FOLDER="$(dirname "$0")/$ENV"
+for f in $(ls "$FOLDER"/*.sql | sort); do
+  echo "Running $(basename $f)..."
+  psql "$SPRING_DATASOURCE_URL" -f "$f"
+done
+echo "Seed $ENV done."

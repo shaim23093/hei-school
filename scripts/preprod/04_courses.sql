@@ -1,0 +1,10 @@
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000001', 'PROG1', 'Programmation 1', 6, 'EL', 1);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000002', 'PROG2', 'Programmation 2', 5, 'EL', 1);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000003', 'PROG3', 'Programmation 3', 5, 'EL', 2);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000006', 'WEB1', 'Developpement web 1', 5, 'EL', 2);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000009', 'DONNEE1', 'Gestion des donnees 1', 4, 'EL', 1);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000017', 'SYS1', 'Systeme 1', 5, 'TN', 1);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000020', 'TN1', 'Reseaux 1', 5, 'TN', 1);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000024', 'IA1', 'Intelligence artificielle 1', 4, 'TN', 1);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000026', 'MGT1', 'Management 1', 3, 'TN', 1);
+INSERT INTO course (id, code, name, credits, path, semester) VALUES ('e1000000-0000-0000-0000-000000000022', 'SECU1', 'Securite 1', 4, 'TN', 2);
