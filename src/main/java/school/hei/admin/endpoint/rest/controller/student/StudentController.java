@@ -54,15 +54,15 @@ public class StudentController {
 
   @GetMapping("/students/{id}/grades")
   public StudentGradesResponse getGrades(
-      @PathVariable("id") UUID studentId,
+      @PathVariable("id") UUID id,
       @RequestParam(value = "semester", required = false) Integer semester) {
-    return gradeService.getGrades(studentId, semester);
+    return gradeService.getGrades(id, semester);
   }
 
   @GetMapping("/students/{id}/transcript")
   public TranscriptResponse getTranscript(
-      @PathVariable("id") UUID studentId,
+      @PathVariable("id") UUID id,
       @RequestParam(value = "semester", required = false) Integer semester) {
-    return gradeService.getTranscript(studentId, semester);
+    return gradeService.getTranscript(id, semester);
   }
 }
