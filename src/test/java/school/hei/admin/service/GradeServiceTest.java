@@ -1,5 +1,6 @@
 package school.hei.admin.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -158,8 +159,8 @@ class GradeServiceTest {
   @Test
   void computes_weighted_average_when_all_exams_are_graded() {
     JCourse course = course("PROG1", 1, 6);
-    JExam cc1 = exam(course, 1);
-    JExam exam1 = exam(course, 2);
+    JExam cc1 = exam(course, 0.5);
+    JExam exam1 = exam(course, 0.5);
     linkCourse(course);
     when(courseRepository.findAllById(List.of(course.getId()))).thenReturn(List.of(course));
     when(examRepository.findByCourseIdInAndPromotionId(List.of(course.getId()), promotion.getId()))
@@ -178,7 +179,7 @@ class GradeServiceTest {
     List<CourseGradeResult> results = service.computeCourseResults(student, null);
 
     assertEquals(1, results.size());
-    assertEquals(14.0, results.get(0).average(), 0.001);
+    assertEquals(13.5, results.get(0).average(), 0.001);
     assertTrue(results.get(0).complete());
     assertTrue(results.get(0).validated());
   }
@@ -186,8 +187,8 @@ class GradeServiceTest {
   @Test
   void marks_course_incomplete_when_an_exam_has_no_grade() {
     JCourse course = course("PROG1", 1, 6);
-    JExam cc1 = exam(course, 1);
-    JExam exam1 = exam(course, 2);
+    JExam cc1 = exam(course, 0.5);
+    JExam exam1 = exam(course, 0.5);
     linkCourse(course);
     when(courseRepository.findAllById(List.of(course.getId()))).thenReturn(List.of(course));
     when(examRepository.findByCourseIdInAndPromotionId(List.of(course.getId()), promotion.getId()))
@@ -388,5 +389,29 @@ class GradeServiceTest {
     assertThrows(
         NotFoundException.class,
         () -> service.updateGrade(unknown, GradeUpdateRequest.builder().value(12).build()));
+  }
+
+  @Test
+  void validateCoefficientSum_accepts_coefficients_summing_to_one() {
+    JCourse course = course("PROG1", 1, 6);
+    JExam cc1 = exam(course, 0.5);
+    JExam exam1 = exam(course, 0.5);
+    when(examRepository.findByCourseIdInAndPromotionId(List.of(course.getId()), promotion.getId()))
+        .thenReturn(List.of(cc1, exam1));
+
+    assertDoesNotThrow(() -> service.validateCoefficientSum(course.getId(), promotion.getId()));
+  }
+
+  @Test
+  void validateCoefficientSum_rejects_coefficients_not_summing_to_one() {
+    JCourse course = course("PROG1", 1, 6);
+    JExam cc1 = exam(course, 0.3);
+    JExam exam1 = exam(course, 0.4);
+    when(examRepository.findByCourseIdInAndPromotionId(List.of(course.getId()), promotion.getId()))
+        .thenReturn(List.of(cc1, exam1));
+
+    assertThrows(
+        UnprocessableEntityException.class,
+        () -> service.validateCoefficientSum(course.getId(), promotion.getId()));
   }
 }
