@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import school.hei.admin.dto.request.StudentCreateRequest;
 import school.hei.admin.dto.request.StudentUpdateRequest;
+import school.hei.admin.dto.response.AcademicYearResult;
 import school.hei.admin.dto.response.StudentGradesResponse;
 import school.hei.admin.dto.response.TranscriptResponse;
 import school.hei.admin.entity.Student;
@@ -64,5 +65,11 @@ public class StudentController {
       @PathVariable("id") UUID id,
       @RequestParam(value = "semester", required = false) Integer semester) {
     return gradeService.getTranscript(id, semester);
+  }
+
+  @GetMapping("/students/{id}/academic-year")
+  public AcademicYearResult getAcademicYearResults(
+      @PathVariable("id") UUID id, @RequestParam("year") int year) {
+    return gradeService.getAcademicYearResults(id, year);
   }
 }

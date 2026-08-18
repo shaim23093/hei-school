@@ -15,6 +15,7 @@ public class CourseMapper {
         .credits(entity.getCredits())
         .path(entity.getPath())
         .semester(entity.getSemester())
+        .academicYear(entity.getAcademicYear())
         .build();
   }
 
@@ -30,6 +31,7 @@ public class CourseMapper {
         .credits(model.credits())
         .path(model.path())
         .semester(model.semester())
+        .academicYear(model.academicYear())
         .build();
   }
 
