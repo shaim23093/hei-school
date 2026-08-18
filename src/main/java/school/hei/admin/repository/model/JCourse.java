@@ -39,4 +39,7 @@ public class JCourse {
 
   @Column(name = "semester")
   private int semester;
+
+  @Column(name = "academic_year")
+  private int academicYear;
 }

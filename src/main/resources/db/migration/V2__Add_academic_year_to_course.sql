@@ -1,0 +1,1 @@
+ALTER TABLE course ADD COLUMN academic_year INTEGER DEFAULT 1;

@@ -11,6 +11,7 @@ public record CourseGradeResult(
     String name,
     int credits,
     int semester,
+    int academicYear,
     Path path,
     Double average,
     boolean complete,

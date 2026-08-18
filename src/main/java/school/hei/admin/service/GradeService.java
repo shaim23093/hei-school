@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import school.hei.admin.dto.request.GradeUpdateRequest;
+import school.hei.admin.dto.response.AcademicYearResult;
 import school.hei.admin.dto.response.CourseGradeResult;
 import school.hei.admin.dto.response.GradeHistoryResponse;
 import school.hei.admin.dto.response.GradeResponse;
@@ -89,6 +90,22 @@ public class GradeService {
         .totalCredits(summary.totalCredits())
         .status(summary.status())
         .results(results)
+        .build();
+  }
+
+  public AcademicYearResult getAcademicYearResults(UUID studentId, int academicYear) {
+    JStudent student = requireStudentForCurrentUser(studentId);
+    List<CourseGradeResult> allResults = computeCourseResults(student, null);
+    List<CourseGradeResult> yearResults =
+        allResults.stream().filter(result -> result.academicYear() == academicYear).toList();
+    StudentSummary yearSummary = summary(yearResults);
+    return AcademicYearResult.builder()
+        .academicYear(academicYear)
+        .average(yearSummary.average())
+        .validatedCredits(yearSummary.validatedCredits())
+        .totalCredits(yearSummary.totalCredits())
+        .status(yearSummary.status())
+        .results(yearResults)
         .build();
   }
 
@@ -237,6 +254,7 @@ public class GradeService {
         .name(course.getName())
         .credits(course.getCredits())
         .semester(course.getSemester())
+        .academicYear(course.getAcademicYear())
         .path(course.getPath())
         .average(average)
         .complete(complete)
