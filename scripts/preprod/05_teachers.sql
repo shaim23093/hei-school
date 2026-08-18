@@ -1,2 +1,5 @@
-INSERT INTO teacher (id, account_id, name, first_name, email) VALUES ('t0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'Ramarozaka', 'Toky', 'toky@mail.hei.school');
-INSERT INTO teacher (id, account_id, name, first_name, email) VALUES ('t0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'Maurica', 'Lou', 'lou@mail.hei.school');
+INSERT INTO teacher (id, account_id, name, first_name, email) VALUES ('ab000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'Teacher1', 'Teacher1', 'teacher1@mail.hei.school');
+INSERT INTO teacher (id, account_id, name, first_name, email) VALUES ('ab000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'Teacher2', 'Teacher2', 'teacher2@mail.hei.school');
+INSERT INTO teacher (id, account_id, name, first_name, email) VALUES ('ab000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000004', 'Teacher3', 'Teacher3', 'teacher3@mail.hei.school');
+INSERT INTO teacher (id, account_id, name, first_name, email) VALUES ('ab000000-0000-0000-0000-000000000004', 'a0000000-0000-0000-0000-000000000005', 'Teacher4', 'Teacher4', 'teacher4@mail.hei.school');
+INSERT INTO teacher (id, account_id, name, first_name, email) VALUES ('ab000000-0000-0000-0000-000000000005', 'a0000000-0000-0000-0000-000000000006', 'Teacher5', 'Teacher5', 'teacher5@mail.hei.school');
