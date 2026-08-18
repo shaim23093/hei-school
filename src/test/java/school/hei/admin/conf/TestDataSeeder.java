@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import school.hei.admin.entity.enums.Path;
 import school.hei.admin.entity.enums.Role;
 import school.hei.admin.repository.AccountRepository;
@@ -32,9 +32,9 @@ import school.hei.admin.repository.model.JStudentGroup;
 import school.hei.admin.repository.model.JTeacher;
 import school.hei.admin.repository.model.JTeacherCourse;
 
-@Component
+@Configuration
 @AllArgsConstructor
-public class DataSeeder implements CommandLineRunner {
+public class TestDataSeeder implements CommandLineRunner {
   private final AccountRepository accountRepository;
   private final PasswordEncoder passwordEncoder;
   private final PromotionRepository promotionRepository;
@@ -50,17 +50,20 @@ public class DataSeeder implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    if (accountRepository.findByUsername("admin").isEmpty()) {
-      account("admin", "admin123", Role.ADMIN);
-    }
     if (accountRepository.findByUsername("student1").isPresent()) {
       return;
     }
 
+    account("admin", "admin123", Role.ADMIN);
     JAccount teacher1Account = account("teacher1", "teacher123", Role.TEACHER);
     JAccount teacher2Account = account("teacher2", "teacher123", Role.TEACHER);
+    JAccount teacher3Account = account("teacher3", "teacher123", Role.TEACHER);
+    JAccount teacher4Account = account("teacher4", "teacher123", Role.TEACHER);
     JAccount student1Account = account("student1", "student123", Role.STUDENT);
     JAccount student2Account = account("student2", "student123", Role.STUDENT);
+    for (int i = 3; i <= 15; i++) {
+      account("student" + i, "student123", Role.STUDENT);
+    }
 
     JPromotion promotion =
         JPromotion.builder().id(UUID.randomUUID()).name("Promo 2024").entryYear(2024).build();
