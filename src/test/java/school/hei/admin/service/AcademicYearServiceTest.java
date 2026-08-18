@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ import school.hei.admin.repository.model.JStudent;
 import school.hei.admin.repository.model.JStudentGroup;
 
 class AcademicYearServiceTest {
+  private final StudentRepository studentRepository = mock(StudentRepository.class);
   private final StudentGroupRepository studentGroupRepository = mock(StudentGroupRepository.class);
   private final CourseGroupRepository courseGroupRepository = mock(CourseGroupRepository.class);
   private final CourseRepository courseRepository = mock(CourseRepository.class);
@@ -41,7 +43,7 @@ class AcademicYearServiceTest {
   private final GradeService gradeService =
       new GradeService(
           mock(AccountRepository.class),
-          mock(StudentRepository.class),
+          studentRepository,
           mock(TeacherRepository.class),
           mock(TeacherCourseRepository.class),
           studentGroupRepository,
@@ -68,6 +70,7 @@ class AcademicYearServiceTest {
             .firstName("Tiana")
             .promotion(promotion)
             .build();
+    when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
   }
 
   private JCourse course(String code, int semester, int academicYear, int credits) {

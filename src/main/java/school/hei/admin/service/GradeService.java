@@ -94,7 +94,10 @@ public class GradeService {
   }
 
   public AcademicYearResult getAcademicYearResults(UUID studentId, int academicYear) {
-    JStudent student = requireStudentForCurrentUser(studentId);
+    JStudent student =
+        studentRepository
+            .findById(studentId)
+            .orElseThrow(() -> new NotFoundException("Student not found: " + studentId));
     List<CourseGradeResult> allResults = computeCourseResults(student, null);
     List<CourseGradeResult> yearResults =
         allResults.stream().filter(result -> result.academicYear() == academicYear).toList();
@@ -226,9 +229,9 @@ public class GradeService {
       }
       average = weightedSum / creditsSum;
     }
-    boolean allComplete = results.stream().allMatch(CourseGradeResult::complete);
+    boolean allValidated = results.stream().allMatch(CourseGradeResult::validated);
     return new StudentSummary(
-        average, validatedCredits, totalCredits, allComplete ? "COMPLET" : "PROVISOIRE");
+        average, validatedCredits, totalCredits, allValidated ? "COMPLET" : "PROVISOIRE");
   }
 
   private CourseGradeResult toResult(
