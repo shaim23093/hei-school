@@ -4,6 +4,9 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import school.hei.admin.dto.request.PromotionUpdateRequest;
 import school.hei.admin.dto.response.GraduatedStudentResponse;
 import school.hei.admin.dto.response.PromotionResultsResponse;
 import school.hei.admin.entity.Promotion;
+import school.hei.admin.file.excel.GraduationExcelExporter;
 import school.hei.admin.service.GraduationService;
 import school.hei.admin.service.PromotionService;
 
@@ -24,6 +28,7 @@ import school.hei.admin.service.PromotionService;
 public class PromotionController {
   private final PromotionService promotionService;
   private final GraduationService graduationService;
+  private final GraduationExcelExporter graduationExcelExporter;
 
   @GetMapping("/promotions")
   public List<Promotion> list() {
@@ -59,5 +64,17 @@ public class PromotionController {
   @GetMapping("/promotions/{id}/results")
   public PromotionResultsResponse getResults(@PathVariable("id") UUID promotionId) {
     return graduationService.results(promotionId);
+  }
+
+  @GetMapping("/promotions/{id}/diplomes/excel")
+  public ResponseEntity<byte[]> downloadDiplomasExcel(@PathVariable("id") UUID promotionId) {
+    Promotion promotion = promotionService.getById(promotionId);
+    List<GraduatedStudentResponse> graduates = graduationService.diplomas(promotionId);
+    byte[] excelBytes = graduationExcelExporter.export(promotion.name(), graduates);
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    headers.setContentDispositionFormData("attachment", "diplomes-" + promotion.name() + ".xlsx");
+    return ResponseEntity.ok().headers(headers).body(excelBytes);
   }
 }
