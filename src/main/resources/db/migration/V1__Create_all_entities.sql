@@ -149,115 +149,115 @@ DO $$ BEGIN
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_COURSE_GROUP_ON_COURSE') THEN
-        ALTER TABLE course_group ADD CONSTRAINT FK_COURSE_GROUP_ON_COURSE FOREIGN KEY (course_id) REFERENCES course (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_course_group_on_course') THEN
+        ALTER TABLE course_group ADD CONSTRAINT fk_course_group_on_course FOREIGN KEY (course_id) REFERENCES course (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_COURSE_GROUP_ON_GROUP') THEN
-        ALTER TABLE course_group ADD CONSTRAINT FK_COURSE_GROUP_ON_GROUP FOREIGN KEY (group_id) REFERENCES "group" (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_course_group_on_group') THEN
+        ALTER TABLE course_group ADD CONSTRAINT fk_course_group_on_group FOREIGN KEY (group_id) REFERENCES "group" (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_COURSE_GROUP_ON_PROMOTION') THEN
-        ALTER TABLE course_group ADD CONSTRAINT FK_COURSE_GROUP_ON_PROMOTION FOREIGN KEY (promotion_id) REFERENCES promotion (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_course_group_on_promotion') THEN
+        ALTER TABLE course_group ADD CONSTRAINT fk_course_group_on_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_EXAM_ON_COURSE') THEN
-        ALTER TABLE exam ADD CONSTRAINT FK_EXAM_ON_COURSE FOREIGN KEY (course_id) REFERENCES course (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_exam_on_course') THEN
+        ALTER TABLE exam ADD CONSTRAINT fk_exam_on_course FOREIGN KEY (course_id) REFERENCES course (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_EXAM_ON_PROMOTION') THEN
-        ALTER TABLE exam ADD CONSTRAINT FK_EXAM_ON_PROMOTION FOREIGN KEY (promotion_id) REFERENCES promotion (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_exam_on_promotion') THEN
+        ALTER TABLE exam ADD CONSTRAINT fk_exam_on_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_GRADE_HISTORY_ON_EXAM') THEN
-        ALTER TABLE grade_history ADD CONSTRAINT FK_GRADE_HISTORY_ON_EXAM FOREIGN KEY (exam_id) REFERENCES exam (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_grade_history_on_exam') THEN
+        ALTER TABLE grade_history ADD CONSTRAINT fk_grade_history_on_exam FOREIGN KEY (exam_id) REFERENCES exam (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_GRADE_HISTORY_ON_GRADE') THEN
-        ALTER TABLE grade_history ADD CONSTRAINT FK_GRADE_HISTORY_ON_GRADE FOREIGN KEY (grade_id) REFERENCES grade (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_grade_history_on_grade') THEN
+        ALTER TABLE grade_history ADD CONSTRAINT fk_grade_history_on_grade FOREIGN KEY (grade_id) REFERENCES grade (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_GRADE_HISTORY_ON_STUDENT') THEN
-        ALTER TABLE grade_history ADD CONSTRAINT FK_GRADE_HISTORY_ON_STUDENT FOREIGN KEY (student_id) REFERENCES student (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_grade_history_on_student') THEN
+        ALTER TABLE grade_history ADD CONSTRAINT fk_grade_history_on_student FOREIGN KEY (student_id) REFERENCES student (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_GRADE_ON_EXAM') THEN
-        ALTER TABLE grade ADD CONSTRAINT FK_GRADE_ON_EXAM FOREIGN KEY (exam_id) REFERENCES exam (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_grade_on_exam') THEN
+        ALTER TABLE grade ADD CONSTRAINT fk_grade_on_exam FOREIGN KEY (exam_id) REFERENCES exam (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_GRADE_ON_STUDENT') THEN
-        ALTER TABLE grade ADD CONSTRAINT FK_GRADE_ON_STUDENT FOREIGN KEY (student_id) REFERENCES student (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_grade_on_student') THEN
+        ALTER TABLE grade ADD CONSTRAINT fk_grade_on_student FOREIGN KEY (student_id) REFERENCES student (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_STUDENT_GROUP_ON_GROUP') THEN
-        ALTER TABLE student_group ADD CONSTRAINT FK_STUDENT_GROUP_ON_GROUP FOREIGN KEY (group_id) REFERENCES "group" (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_student_group_on_group') THEN
+        ALTER TABLE student_group ADD CONSTRAINT fk_student_group_on_group FOREIGN KEY (group_id) REFERENCES "group" (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_STUDENT_GROUP_ON_STUDENT') THEN
-        ALTER TABLE student_group ADD CONSTRAINT FK_STUDENT_GROUP_ON_STUDENT FOREIGN KEY (student_id) REFERENCES student (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_student_group_on_student') THEN
+        ALTER TABLE student_group ADD CONSTRAINT fk_student_group_on_student FOREIGN KEY (student_id) REFERENCES student (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_STUDENT_ON_ACCOUNT') THEN
-        ALTER TABLE student ADD CONSTRAINT FK_STUDENT_ON_ACCOUNT FOREIGN KEY (account_id) REFERENCES account (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_student_on_account') THEN
+        ALTER TABLE student ADD CONSTRAINT fk_student_on_account FOREIGN KEY (account_id) REFERENCES account (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_STUDENT_ON_PROMOTION') THEN
-        ALTER TABLE student ADD CONSTRAINT FK_STUDENT_ON_PROMOTION FOREIGN KEY (promotion_id) REFERENCES promotion (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_student_on_promotion') THEN
+        ALTER TABLE student ADD CONSTRAINT fk_student_on_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_TEACHER_COURSE_ON_COURSE') THEN
-        ALTER TABLE teacher_course ADD CONSTRAINT FK_TEACHER_COURSE_ON_COURSE FOREIGN KEY (course_id) REFERENCES course (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_teacher_course_on_course') THEN
+        ALTER TABLE teacher_course ADD CONSTRAINT fk_teacher_course_on_course FOREIGN KEY (course_id) REFERENCES course (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_TEACHER_COURSE_ON_GROUP') THEN
-        ALTER TABLE teacher_course ADD CONSTRAINT FK_TEACHER_COURSE_ON_GROUP FOREIGN KEY (group_id) REFERENCES "group" (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_teacher_course_on_group') THEN
+        ALTER TABLE teacher_course ADD CONSTRAINT fk_teacher_course_on_group FOREIGN KEY (group_id) REFERENCES "group" (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_TEACHER_COURSE_ON_PROMOTION') THEN
-        ALTER TABLE teacher_course ADD CONSTRAINT FK_TEACHER_COURSE_ON_PROMOTION FOREIGN KEY (promotion_id) REFERENCES promotion (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_teacher_course_on_promotion') THEN
+        ALTER TABLE teacher_course ADD CONSTRAINT fk_teacher_course_on_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_TEACHER_COURSE_ON_TEACHER') THEN
-        ALTER TABLE teacher_course ADD CONSTRAINT FK_TEACHER_COURSE_ON_TEACHER FOREIGN KEY (teacher_id) REFERENCES teacher (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_teacher_course_on_teacher') THEN
+        ALTER TABLE teacher_course ADD CONSTRAINT fk_teacher_course_on_teacher FOREIGN KEY (teacher_id) REFERENCES teacher (id);
     END IF;
 END $$;
 
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_TEACHER_ON_ACCOUNT') THEN
-        ALTER TABLE teacher ADD CONSTRAINT FK_TEACHER_ON_ACCOUNT FOREIGN KEY (account_id) REFERENCES account (id);
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_teacher_on_account') THEN
+        ALTER TABLE teacher ADD CONSTRAINT fk_teacher_on_account FOREIGN KEY (account_id) REFERENCES account (id);
     END IF;
 END $$;
