@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,6 +45,7 @@ import school.hei.admin.repository.model.JTeacher;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class GradeService {
   private final AccountRepository accountRepository;
   private final StudentRepository studentRepository;
@@ -204,7 +206,11 @@ public class GradeService {
     }
 
     for (JCourse course : courses) {
-      validateCoefficientSum(course.getId(), promotionId);
+      try {
+        validateCoefficientSum(course.getId(), promotionId);
+      } catch (UnprocessableEntityException e) {
+        log.warn("Skipping course {}: {}", course.getCode(), e.getMessage());
+      }
     }
 
     List<JExam> exams = examRepository.findByCourseIdInAndPromotionId(courseIds, promotionId);
