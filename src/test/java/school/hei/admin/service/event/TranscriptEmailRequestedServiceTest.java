@@ -47,7 +47,7 @@ class TranscriptEmailRequestedServiceTest {
     File mockPdf = File.createTempFile("test-transcript", ".pdf");
     mockPdf.deleteOnExit();
 
-    when(gradeService.getTranscript(studentId, 1)).thenReturn(transcript);
+    when(gradeService.getTranscriptInternal(studentId, 1)).thenReturn(transcript);
     when(pdfGenerator.generate(transcript)).thenReturn(mockPdf);
     when(bucketComponent.presign(anyString(), any()))
         .thenReturn(new java.net.URL("https://s3.example.com/presigned"));
@@ -61,7 +61,7 @@ class TranscriptEmailRequestedServiceTest {
 
     service.accept(event);
 
-    verify(gradeService).getTranscript(studentId, 1);
+    verify(gradeService).getTranscriptInternal(studentId, 1);
     verify(pdfGenerator).generate(transcript);
     verify(bucketComponent).upload(any(File.class), contains("transcripts/" + studentId));
     verify(bucketComponent).presign(contains("transcripts/" + studentId), any());
@@ -70,7 +70,7 @@ class TranscriptEmailRequestedServiceTest {
             argThat(addr -> addr.toString().equals("student@hei.school")),
             contains("Relevé de Notes"),
             eq("mail/transcript"),
-            eq(transcript));
+            argThat(m -> m instanceof java.util.Map && ((java.util.Map<?, ?>) m).containsKey("model")));
   }
 
   @Test
@@ -94,7 +94,7 @@ class TranscriptEmailRequestedServiceTest {
     File mockPdf = File.createTempFile("test-transcript", ".pdf");
     mockPdf.deleteOnExit();
 
-    when(gradeService.getTranscript(studentId, null)).thenReturn(transcript);
+    when(gradeService.getTranscriptInternal(studentId, null)).thenReturn(transcript);
     when(pdfGenerator.generate(transcript)).thenReturn(mockPdf);
     when(bucketComponent.presign(anyString(), any()))
         .thenReturn(new java.net.URL("https://s3.example.com/presigned"));
@@ -108,7 +108,7 @@ class TranscriptEmailRequestedServiceTest {
 
     service.accept(event);
 
-    verify(gradeService).getTranscript(studentId, null);
-    verify(mailerTemplate).sendEmail(any(), anyString(), eq("mail/transcript"), eq(transcript));
+    verify(gradeService).getTranscriptInternal(studentId, null);
+    verify(mailerTemplate).sendEmail(any(), anyString(), eq("mail/transcript"), any(java.util.Map.class));
   }
 }

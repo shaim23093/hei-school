@@ -30,7 +30,8 @@ public class TranscriptEmailRequestedService implements Consumer<TranscriptEmail
     UUID studentId = event.getStudentId();
     Integer semester = event.getSemester();
 
-    TranscriptResponse transcript = gradeService.getTranscript(studentId, semester);
+    TranscriptResponse transcript =
+        gradeService.getTranscriptInternal(studentId, semester);
     File pdfFile = pdfGenerator.generate(transcript);
 
     String bucketKey = "transcripts/" + studentId + "/" + pdfFile.getName();
@@ -43,7 +44,7 @@ public class TranscriptEmailRequestedService implements Consumer<TranscriptEmail
         new InternetAddress(event.getRecipientEmail()),
         emailSubject,
         "mail/transcript",
-        transcript);
+        java.util.Map.of("model", transcript, "pdfUrl", presignedUrl.toString()));
 
     pdfFile.delete();
   }

@@ -76,6 +76,18 @@ public class GradeService {
 
   public TranscriptResponse getTranscript(UUID studentId, Integer semester) {
     JStudent student = requireStudentForCurrentUser(studentId);
+    return buildTranscript(student, semester);
+  }
+
+  public TranscriptResponse getTranscriptInternal(UUID studentId, Integer semester) {
+    JStudent student =
+        studentRepository
+            .findById(studentId)
+            .orElseThrow(() -> new NotFoundException("Student not found: " + studentId));
+    return buildTranscript(student, semester);
+  }
+
+  private TranscriptResponse buildTranscript(JStudent student, Integer semester) {
     List<CourseGradeResult> results = computeCourseResults(student, semester);
     StudentSummary summary = summary(results);
     return TranscriptResponse.builder()

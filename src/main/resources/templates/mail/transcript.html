@@ -59,6 +59,12 @@
         </tbody>
     </table>
 
+    <div th:if="${pdfUrl}" style="text-align: center; margin-top: 30px;">
+        <a th:href="${pdfUrl}" style="display:inline-block;padding:12px 24px;background-color:#3498db;color:white;text-decoration:none;border-radius:4px;">
+            Télécharger le relevé (PDF)
+        </a>
+    </div>
+
     <p style="margin-top: 30px; font-size: 12px; color: #95a5a6; text-align: center;">
         Généré automatiquement par HEI Admin
     </p>
