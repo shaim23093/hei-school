@@ -191,6 +191,10 @@ public class GradeService {
       return List.of();
     }
 
+    for (JCourse course : courses) {
+      validateCoefficientSum(course.getId(), promotionId);
+    }
+
     List<JExam> exams = examRepository.findByCourseIdInAndPromotionId(courseIds, promotionId);
     Map<UUID, List<JExam>> examsByCourse =
         exams.stream().collect(Collectors.groupingBy(exam -> exam.getCourse().getId()));
@@ -300,6 +304,19 @@ public class GradeService {
             .isPresent();
     if (!assigned) {
       throw new ForbiddenException("Teacher is not assigned to this course");
+    }
+  }
+
+  void validateCoefficientSum(UUID courseId, UUID promotionId) {
+    List<JExam> exams =
+        examRepository.findByCourseIdInAndPromotionId(List.of(courseId), promotionId);
+    if (exams.isEmpty()) {
+      return;
+    }
+    double sum = exams.stream().mapToDouble(JExam::getCoefficient).sum();
+    if (Math.abs(sum - 1.0) > 0.001) {
+      throw new UnprocessableEntityException(
+          "Exam coefficients for course must sum to 1.0, but got: " + sum);
     }
   }
 

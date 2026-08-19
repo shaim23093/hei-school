@@ -166,12 +166,12 @@ public class TestDataSeeder implements CommandLineRunner {
     teacherCourse(teacher1, web1, group1, promotion);
     teacherCourse(teacher2, tn1, group2, promotion);
 
-    JExam prog1Cc1 = exam(prog1, promotion, "CC1", 1);
-    JExam prog1Exam = exam(prog1, promotion, "Exam", 2);
-    JExam web1Cc1 = exam(web1, promotion, "CC1", 1);
-    JExam web1Exam = exam(web1, promotion, "Exam", 2);
-    JExam tn1Cc1 = exam(tn1, promotion, "CC1", 1);
-    JExam tn1Exam = exam(tn1, promotion, "Exam", 2);
+    JExam prog1Cc1 = exam(prog1, promotion, "CC1", 0.5);
+    JExam prog1Exam = exam(prog1, promotion, "Exam", 0.5);
+    JExam web1Cc1 = exam(web1, promotion, "CC1", 0.5);
+    JExam web1Exam = exam(web1, promotion, "Exam", 0.5);
+    JExam tn1Cc1 = exam(tn1, promotion, "CC1", 0.5);
+    JExam tn1Exam = exam(tn1, promotion, "Exam", 0.5);
 
     grade(student1, prog1Cc1, 12);
     grade(student1, prog1Exam, 14);
