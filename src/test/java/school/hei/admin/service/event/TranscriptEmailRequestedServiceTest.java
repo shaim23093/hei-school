@@ -70,7 +70,8 @@ class TranscriptEmailRequestedServiceTest {
             argThat(addr -> addr.toString().equals("student@hei.school")),
             contains("Relevé de Notes"),
             eq("mail/transcript"),
-            argThat(m -> m instanceof java.util.Map && ((java.util.Map<?, ?>) m).containsKey("model")));
+            argThat(
+                m -> m instanceof java.util.Map && ((java.util.Map<?, ?>) m).containsKey("model")));
   }
 
   @Test
@@ -109,6 +110,7 @@ class TranscriptEmailRequestedServiceTest {
     service.accept(event);
 
     verify(gradeService).getTranscriptInternal(studentId, null);
-    verify(mailerTemplate).sendEmail(any(), anyString(), eq("mail/transcript"), any(java.util.Map.class));
+    verify(mailerTemplate)
+        .sendEmail(any(), anyString(), eq("mail/transcript"), any(java.util.Map.class));
   }
 }

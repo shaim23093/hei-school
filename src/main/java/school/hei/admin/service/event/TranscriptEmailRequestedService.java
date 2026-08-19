@@ -30,8 +30,7 @@ public class TranscriptEmailRequestedService implements Consumer<TranscriptEmail
     UUID studentId = event.getStudentId();
     Integer semester = event.getSemester();
 
-    TranscriptResponse transcript =
-        gradeService.getTranscriptInternal(studentId, semester);
+    TranscriptResponse transcript = gradeService.getTranscriptInternal(studentId, semester);
     File pdfFile = pdfGenerator.generate(transcript);
 
     String bucketKey = "transcripts/" + studentId + "/" + pdfFile.getName();
