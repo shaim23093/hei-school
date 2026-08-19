@@ -26,6 +26,16 @@ public class MailerTemplate {
     mailer.accept(new Email(to, List.of(), List.of(), subject, htmlBody, List.of()));
   }
 
+  public void sendEmail(
+      jakarta.mail.internet.InternetAddress to,
+      String subject,
+      String templateName,
+      Map<String, Object> variables) {
+    var ctx = new Context(Locale.FRENCH, variables);
+    String htmlBody = templateEngine.process(templateName, ctx);
+    mailer.accept(new Email(to, List.of(), List.of(), subject, htmlBody, List.of()));
+  }
+
   public void sendEmailWithAttachments(
       jakarta.mail.internet.InternetAddress to,
       String subject,
