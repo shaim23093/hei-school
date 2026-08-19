@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Promotions - HEI</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="color: #2c3e50;">Promotions</h1>
+
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #2c3e50; color: white;">
+                <th style="padding: 10px; text-align: left;">Nom</th>
+                <th style="padding: 10px; text-align: center;">Année d'entrée</th>
+                <th style="padding: 10px; text-align: center;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="promo : ${promotions}" style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 10px;" th:text="${promo.name}">-</td>
+                <td style="padding: 10px; text-align: center;" th:text="${promo.entryYear}">-</td>
+                <td style="padding: 10px; text-align: center;">
+                    <a th:href="@{/promotions/{id}/diplomes/excel(id=${promo.id})}"
+                       style="background-color: #27ae60; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px;">
+                        Télécharger Diplômés (Excel)
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(promotions)}" style="color: #95a5a6;">Aucune promotion trouvée.</p>
+</body>
+</html>

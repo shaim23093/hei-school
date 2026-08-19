@@ -1,9 +1,11 @@
 package school.hei.admin.endpoint.rest.controller.student;
 
+import jakarta.mail.internet.AddressException;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,8 @@ import school.hei.admin.dto.request.StudentUpdateRequest;
 import school.hei.admin.dto.response.AcademicYearResult;
 import school.hei.admin.dto.response.StudentGradesResponse;
 import school.hei.admin.dto.response.TranscriptResponse;
+import school.hei.admin.endpoint.event.EventProducer;
+import school.hei.admin.endpoint.event.model.TranscriptEmailRequested;
 import school.hei.admin.entity.Student;
 import school.hei.admin.service.GradeService;
 import school.hei.admin.service.StudentService;
@@ -26,6 +30,7 @@ import school.hei.admin.service.StudentService;
 public class StudentController {
   private final StudentService studentService;
   private final GradeService gradeService;
+  private final EventProducer<TranscriptEmailRequested> eventProducer;
 
   @GetMapping("/students")
   public List<Student> list() {
@@ -71,5 +76,21 @@ public class StudentController {
   public AcademicYearResult getAcademicYearResults(
       @PathVariable("id") UUID id, @RequestParam("year") int year) {
     return gradeService.getAcademicYearResults(id, year);
+  }
+
+  @PostMapping("/students/{id}/transcript/email")
+  public ResponseEntity<String> sendTranscriptEmail(
+      @PathVariable("id") UUID id,
+      @RequestParam("email") String email,
+      @RequestParam(value = "semester", required = false) Integer semester)
+      throws AddressException {
+    var event =
+        TranscriptEmailRequested.builder()
+            .recipientEmail(email)
+            .studentId(id)
+            .semester(semester)
+            .build();
+    eventProducer.accept(List.of(event));
+    return ResponseEntity.ok("Transcript email request queued");
   }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Relevé de Notes</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px;">
+    <h1 style="text-align: center; color: #2c3e50;">Relevé de Notes</h1>
+    <h2 style="text-align: center; color: #7f8c8d;" th:text="${model.promotionName}">Promotion</h2>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+            <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #ddd;">Nom</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;" th:text="${model.firstName + ' ' + model.name}">-</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #ddd;">Matricule</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;" th:text="${model.std}">-</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #ddd;">Semestre</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;" th:text="${model.semester != null ? model.semester : 'Année complète'}">-</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #ddd;">Moyenne</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;" th:text="${model.average != null ? #numbers.formatDecimal(model.average, 1, 2) + '/20' : 'N/A'}">-</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #ddd;">Crédits validés</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;" th:text="${model.validatedCredits + '/' + model.totalCredits}">-</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #ddd;">Statut</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;" th:text="${model.status}">-</td>
+        </tr>
+    </table>
+
+    <h3 style="color: #2c3e50;">Détail par matière</h3>
+    <table style="width: 100%; border-collapse: collapse;" th:if="${model.results != null}">
+        <thead>
+            <tr style="background-color: #2c3e50; color: white;">
+                <th style="padding: 8px; text-align: left;">Code</th>
+                <th style="padding: 8px; text-align: left;">Matière</th>
+                <th style="padding: 8px; text-align: center;">Crédits</th>
+                <th style="padding: 8px; text-align: center;">Semestre</th>
+                <th style="padding: 8px; text-align: center;">Moyenne</th>
+                <th style="padding: 8px; text-align: center;">Validé</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="result : ${model.results}" style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 8px;" th:text="${result.code}">-</td>
+                <td style="padding: 8px;" th:text="${result.name}">-</td>
+                <td style="padding: 8px; text-align: center;" th:text="${result.credits}">-</td>
+                <td style="padding: 8px; text-align: center;" th:text="${result.semester}">-</td>
+                <td style="padding: 8px; text-align: center;" th:text="${result.average != null ? #numbers.formatDecimal(result.average, 1, 2) : 'N/A'}">-</td>
+                <td style="padding: 8px; text-align: center;" th:text="${result.validated ? 'Oui' : 'Non'}">-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p style="margin-top: 30px; font-size: 12px; color: #95a5a6; text-align: center;">
+        Généré automatiquement par HEI Admin
+    </p>
+</body>
+</html>
