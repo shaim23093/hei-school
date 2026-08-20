@@ -36,27 +36,9 @@ configurations {
     }
 }
 
-openApiGenerate {
-    inputSpec = "$rootDir/doc/api.yml"
-    outputDir = "$buildDir/generated/openapi"
-    generatorName = 'spring'
-    configFile = "$rootDir/doc/openapitools.json"
-}
 
-openApiValidate {
-    inputSpec = "$rootDir/doc/api.yml"
-}
 
-task generateApiYaml {
-    description = 'Fetches OpenAPI spec from running app and saves to doc/api.yml'
-    group = 'documentation'
-    doLast {
-        def url = new URL('http://localhost:8080/v3/api-docs.yaml')
-        def yaml = url.text
-        file("$rootDir/doc/api.yml").text = yaml
-        println "OpenAPI spec saved to doc/api.yml"
-    }
-}
+
 test {
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     useJUnitPlatform()
